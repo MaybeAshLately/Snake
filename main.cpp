@@ -1,44 +1,18 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
-
-// to powinno być w osobnych plikach !
-
-class MinesweeperBoard
-{
-
-};
-
-class MSSFMLView
-{
-	MinesweeperBoard & board;
-public:
-	explicit MSSFMLView(MinesweeperBoard & b);
-
-	void draw (sf::RenderWindow & win);
-};
-
-MSSFMLView::MSSFMLView(MinesweeperBoard & b) : board(b) {}
-
-void MSSFMLView::draw (sf::RenderWindow & win)
-{
-	// tu robimy rysowanie planszy na podstawie zawartości "board"
-	
-	sf::RectangleShape r;
-	r.setSize ( sf::Vector2f(10, 10) ) ;
-	r.setFillColor ( sf::Color::Red );
-	r.setPosition(100,100);
-	win.draw(r);
-}
-
+#include "Snake.h"
+#include "Board.h"
+#include "Manager.h"
+#include <ctime>
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Grafika w C++/SFML");
+  srand(time(0));
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SNAKE test");
     window.setVerticalSyncEnabled(false);
-    window.setFramerateLimit(1);
+    window.setFramerateLimit(5);
 
-    MinesweeperBoard board;
-	MSSFMLView view(board);
+ int n=0;
 
     while (window.isOpen())
     {
@@ -50,8 +24,15 @@ int main()
         }
         
         window.clear();
-        view.draw(window);
+        sf::RectangleShape r;
+        r.setFillColor(sf::Color::Red);
+        r.setSize(sf::Vector2f(10,10));
+        r.setPosition(sf::Vector2f(0+n,0));
+       
+       window.draw(r);
         window.display();
+        n=n+10;
+        if(n==800) n=0;
     }
 
   return 0;
