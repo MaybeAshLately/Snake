@@ -16,6 +16,7 @@ Klasa zarządzająca grą. Do jej obowiązków należy;
 
 Korzysta z referencji na planszę 
 */
+
 class Manager
 {
   int score=0;
@@ -24,6 +25,8 @@ class Manager
   sf::Clock clk;
 
   void movement();
+  
+  
   
 
   

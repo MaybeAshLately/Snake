@@ -4,24 +4,34 @@
 #include "Board.h"
 #include "Manager.h"
 #include <ctime>
+#include "Test.h"
+#include <cstdlib>
 
 
 int main()
 {
   srand(time(0));
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SNAKE test");
-    window.setVerticalSyncEnabled(false);
-    window.setFramerateLimit(10);
+	
 
     Snake snake1("nazwa");
-    Board board1(snake1,EASY);
+    Board board1(snake1,HARD);
     Manager manager1(board1,snake1);
 
- int n=0;
+   Test test_snake(snake1,board1,manager1);
+
+  while(snake1.is_alive()==true)
+  {
+    test_snake.playing_test();
+  }
 
 
-
-
+   
+/*
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SNAKE test");
+    window.setVerticalSyncEnabled(false);
+    window.setFramerateLimit(10);
+  
+    int n=0;
     while (window.isOpen())
     {
         sf::Event event;
@@ -45,6 +55,6 @@ int main()
         manager1.play();
         
     }
-
+*/
   return 0;
 } 

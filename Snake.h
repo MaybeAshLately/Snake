@@ -18,7 +18,7 @@ każdy kawałek węża jest dwuelementowym wektorem współrzędnej x i y; plans
 */
  
 enum Directions {NORTH, SOUTH, WEST,EAST};
-
+enum Corner {RIGHT,LEFT,ANY};
 class Snake
 {
   int length; 
@@ -28,9 +28,12 @@ class Snake
   bool alive;
 
 
-
+  Corner move_corner;
   void update_position();
   void update_head_position();
+
+  void turn_right();
+  void turn_left();
 
   public:
   explicit Snake(std::string name);
@@ -44,6 +47,9 @@ class Snake
   sf::Vector2f get_position_of_cell(int number);
   void snake_died();
   void add_cell(sf::Vector2f cell);
+
+  void move_corner_left();
+  void move_corner_right();
  
 
 };

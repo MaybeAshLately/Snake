@@ -1,9 +1,21 @@
 #include "Board.h"
 #include <cstdlib>
+#include <iostream>
 
 //KONSTRUKTOR
 Board::Board(Snake & snake_body ,const Level g_level): snake_body(snake_body), game_level(g_level)
 {
+   for(int row=0;row<60;row++)
+  {
+    for(int col=0;col<80;col++)
+     {
+       fields[row][col].has_food=false;
+       fields[row][col].has_wall=false;
+     }
+    
+  }
+
+
   generate_walls();
   generate_food();
 
@@ -21,6 +33,7 @@ void Board::generate_food()
   {
         col=rand()%79;
         row=rand()%59;
+        if((row==1)and(col==1)) continue;
        if((fields[row][col].has_wall==false)and(fields[row][col].has_food==false))
        {
          fields[row][col].has_food=true;
@@ -38,7 +51,7 @@ void Board::generate_outside_walls()
   {
     fields[row][0].has_wall=true;
   }
-  for(int col=0;col<60;col++)
+  for(int col=0;col<80;col++)
   {
     fields[0][col].has_wall=true;
   }
@@ -47,7 +60,7 @@ void Board::generate_outside_walls()
   {
     fields[row][79].has_wall=true;
   }
-  for(int col=0;col<60;col++)
+  for(int col=0;col<80;col++)
   {
     fields[59][col].has_wall=true;
   }
@@ -98,7 +111,9 @@ Level Board::get_game_level() const
   //ZWRACA PRAWDĘ JEŚLI POLE MA JEDZENIE
   bool Board::field_has_food(int row,int col)
   {
+    
      if(fields[row][col].has_food==true) return true;
+     
      return false;
   }
 
@@ -108,4 +123,17 @@ void Board::eat(int row, int col)
 {
   
  fields[row][col].has_food=false;
+}
+
+
+//zwraca prawdę jeśli na polu jest część węża
+bool Board::is_snake_on_field(int row, int col)
+{
+  int size=snake_body.get_snake_length();
+  for(int i=0; i<size;i++)
+  {
+    sf::Vector2f vec=sf::Vector2f(row,col);
+    if(vec==snake_body.get_position_of_cell(i)) return true;
+  }
+  return false;
 }

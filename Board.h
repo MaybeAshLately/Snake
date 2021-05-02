@@ -43,7 +43,8 @@ enum Level {EASY,MEDIUM,HARD};
 
   bool field_has_wall(int row,int col);
   bool field_has_food(int row,int col);
-  
+  bool is_snake_on_field(int row, int col);
+
   void eat(int row, int col);
 
  };
