@@ -5,14 +5,34 @@
 #include "Manager.h"
 #include <ctime>
 
+
 int main()
 {
   srand(time(0));
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SNAKE test");
     window.setVerticalSyncEnabled(false);
-    window.setFramerateLimit(5);
+    window.setFramerateLimit(10);
+
+    Snake snake1("nazwa");
+    Board board1(snake1,EASY);
+    Manager manager1(board1,snake1);
 
  int n=0;
+
+//sf::Clock clk;
+ while(1)
+ {
+  
+  manager1.play();/*
+  if(clk.getElapsedTime().asSeconds()>5)
+  {
+   // snake_body.update();
+    manager1.play();
+    clk.restart();
+  }*/
+  
+  
+ }
 
     while (window.isOpen())
     {
@@ -33,6 +53,7 @@ int main()
         window.display();
         n=n+10;
         if(n==800) n=0;
+        
     }
 
   return 0;

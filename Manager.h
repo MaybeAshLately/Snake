@@ -20,8 +20,12 @@ class Manager
 {
   int score=0;
   Board & snake_board;
+  Snake & snake_body;
+  sf::Clock clk;
   public:
-  explicit Manager(Board & snake_board);
+  explicit Manager(Board & snake_board, Snake & snake_body);
+  
+  void play();
 
 };
 

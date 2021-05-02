@@ -27,6 +27,11 @@ class Snake
   std::vector <sf::Vector2f> snake_cells;
   bool alive;
 
+
+
+  void update_position();
+  void update_head_position();
+
   public:
   explicit Snake(std::string name);
   int get_snake_length() const;
