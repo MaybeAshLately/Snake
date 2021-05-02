@@ -14,6 +14,7 @@ Snake::Snake(std::string name): snake_name(name)
 
 //---------------------------
 
+
 //funkcja aktualizująca położenie głowy węża w zależności od kierunku ruchu
 void Snake::update_head_position()
 {
@@ -94,4 +95,25 @@ std::string Snake::get_snake_name() const
 bool Snake::is_alive() const
 {
   return alive;
+}
+
+
+//ZWRACA POZYCJĘ ŻĄDANEJ CZĘŚCI WĘŻA
+sf::Vector2f Snake::get_position_of_cell(int number)
+{
+ if((number<0)or(number>static_cast<int>(snake_cells.size())-1)) return sf::Vector2f(-1,-1);
+ return snake_cells[number];
+}
+
+//SYGNALIZUJE ŻE WĄŻ UMARŁ
+void Snake::snake_died()
+{
+  alive=false;
+}
+
+
+//Dodaje fragment węża
+void Snake::add_cell(sf::Vector2f cell)
+{
+  snake_cells.push_back(cell);
 }

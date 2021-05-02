@@ -19,20 +19,8 @@ int main()
 
  int n=0;
 
-//sf::Clock clk;
- while(1)
- {
-  
-  manager1.play();/*
-  if(clk.getElapsedTime().asSeconds()>5)
-  {
-   // snake_body.update();
-    manager1.play();
-    clk.restart();
-  }*/
-  
-  
- }
+
+
 
     while (window.isOpen())
     {
@@ -53,6 +41,8 @@ int main()
         window.display();
         n=n+10;
         if(n==800) n=0;
+
+        manager1.play();
         
     }
 

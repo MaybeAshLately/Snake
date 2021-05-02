@@ -40,6 +40,10 @@ class Snake
   bool is_alive() const;
 
   void update();
+
+  sf::Vector2f get_position_of_cell(int number);
+  void snake_died();
+  void add_cell(sf::Vector2f cell);
  
 
 };

@@ -22,11 +22,15 @@ class Manager
   Board & snake_board;
   Snake & snake_body;
   sf::Clock clk;
+
+  void movement();
+  
+
+  
   public:
   explicit Manager(Board & snake_board, Snake & snake_body);
   
   void play();
-
 };
 
 

@@ -41,6 +41,11 @@ enum Level {EASY,MEDIUM,HARD};
 
   Level get_game_level() const;
 
+  bool field_has_wall(int row,int col);
+  bool field_has_food(int row,int col);
+  
+  void eat(int row, int col);
+
  };
 
 

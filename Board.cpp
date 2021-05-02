@@ -85,3 +85,27 @@ Level Board::get_game_level() const
   return game_level;
 }
  
+
+
+  //ZWRACA PRAWDĘ JEŚLI POLE MA PRZESZKODĘ
+  bool Board::field_has_wall(int row,int col)
+  {
+     if(fields[row][col].has_wall==true) return true;
+     return false;
+  }
+
+
+  //ZWRACA PRAWDĘ JEŚLI POLE MA JEDZENIE
+  bool Board::field_has_food(int row,int col)
+  {
+     if(fields[row][col].has_food==true) return true;
+     return false;
+  }
+
+
+//USUWA JEDZENIE Z POLA
+void Board::eat(int row, int col)
+{
+  
+ fields[row][col].has_food=false;
+}
