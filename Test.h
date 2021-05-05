@@ -14,7 +14,7 @@ class Test
   void rysowanie();
   
   public:
-  Test(Snake & snake_test,  Board & board_test, Manager & manager_test);
+  explicit Test(Snake & snake_test,  Board & board_test, Manager & manager_test);
   
   void playing_test();
 };

@@ -1,7 +1,7 @@
 #include "Manager.h"
 #include <iostream>
 
-Manager::Manager(Board & snake_board,Snake & snake_body): snake_board(snake_board), snake_body(snake_body)
+Manager::Manager(Snake & snake_body, Board & snake_board):snake_body(snake_body), snake_board(snake_board) 
 {
   
 }
@@ -53,6 +53,7 @@ void Manager::play()
   {
     //tu będzie obsługa tego co się stanie po game over
     std::cout<<"GAME OVER"<<std::endl;
+    
   }
   
    

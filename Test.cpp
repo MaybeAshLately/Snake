@@ -15,6 +15,7 @@ void Test::rysowanie()
 {
    for(int row=0;row<60;row++)
   {
+    std::cout<<row+1;
     for(int col=0;col<80;col++)
      {
         

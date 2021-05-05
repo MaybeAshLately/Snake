@@ -20,8 +20,9 @@ Korzysta z referencji na planszę
 class Manager
 {
   int score=0;
-  Board & snake_board;
+  
   Snake & snake_body;
+  Board & snake_board;
   sf::Clock clk;
 
   void movement();
@@ -31,7 +32,7 @@ class Manager
 
   
   public:
-  explicit Manager(Board & snake_board, Snake & snake_body);
+  explicit Manager( Snake & snake_body,Board & snake_board);
   
   void play();
 };
