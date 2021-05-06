@@ -1,4 +1,5 @@
 #include "SnakeSFML.h"
+#include <iostream>
 
 SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml): snake_sfml(snake_sfml), board_sfml(board_sfml), manager_sfml(manager_sfml)
 {
@@ -39,6 +40,9 @@ void SnakeSFML::draw(sf::RenderWindow & win)
     }
   }
 
-
+ /*
+ if(snake_sfml.is_alive()) manager_sfml.play();
+ else std::cout<<"TEST"<<std::endl;
+  */
   manager_sfml.play();
 }

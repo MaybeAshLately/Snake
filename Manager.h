@@ -20,13 +20,14 @@ Korzysta z referencji na planszę
 class Manager
 {
   int score=0;
+  int counter=0;
   
   Snake & snake_body;
   Board & snake_board;
   sf::Clock clk;
 
   void movement();
-  
+  void snake_is_dead();
   
   
 

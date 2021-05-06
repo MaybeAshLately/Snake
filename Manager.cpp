@@ -1,5 +1,11 @@
 #include "Manager.h"
+#include "Board.h"
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <cstring>
+#include <errno.h>
+#include <string>
 
 Manager::Manager(Snake & snake_body, Board & snake_board):snake_body(snake_body), snake_board(snake_board) 
 {
@@ -49,10 +55,10 @@ void Manager::play()
      clk.restart();
      }
   }
-  else
+  else if(counter==0)
   {
-    //tu będzie obsługa tego co się stanie po game over
-    std::cout<<"GAME OVER"<<std::endl;
+   snake_is_dead();
+   counter++;
     
   }
   
@@ -60,3 +66,28 @@ void Manager::play()
 }
 
 
+void Manager::snake_is_dead()
+{
+  std::cout<<"PUNKTY: "<< score<<std::endl;
+
+  std::fstream plik("/home/runner/Snake/plik.txt",std::ios_base::app);
+
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+
+  plik<<snake_body.get_snake_name()<<" ";
+  Level level=snake_board.get_game_level();
+  std::string level_name;
+
+  if(level==EASY) level_name="EASY";
+  else if(level==MEDIUM) level_name="MEDIUM";
+ else level_name="HARD";
+
+  plik<<level_name<<" "<<score<<std::endl;
+  plik.close();
+
+}
