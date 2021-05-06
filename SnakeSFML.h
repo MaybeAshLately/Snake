@@ -16,8 +16,22 @@ class SnakeSFML
   Manager &manager_sfml;
 
   sf::RectangleShape wall_icon;
-  sf::RectangleShape food_icon;
-  sf::RectangleShape snake_icon;
+  sf::RectangleShape wall_icon1;
+  sf::RectangleShape wall_icon2;
+  sf::RectangleShape wall_icon3;
+  sf::RectangleShape wall_icon4;
+
+
+
+
+  sf::CircleShape food_icon;
+  sf::CircleShape snake_icon;
+  sf::CircleShape snake_icon2;
+
+  sf::CircleShape eye_icon;
+
+  void draw_eyes(int row, int col,sf::RenderWindow & win);
+  
   
 
 public:

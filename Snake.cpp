@@ -212,3 +212,13 @@ void Snake::move_corner_right()
 {
   move_corner=RIGHT;
 }
+
+
+
+//funkcja sprawdzająca czy komórka na danym polu jest głową węża
+bool Snake::is_cell_head(int row,int col)
+{
+  sf::Vector2f find(row,col);
+  if(find==get_position_of_cell(0)) return true;
+  return false;
+}

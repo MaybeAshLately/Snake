@@ -53,7 +53,7 @@ Test test_snake(snake1,board1,manager1);
               
         }
         
-        window.clear();
+        window.clear(sf::Color(0,35,118));
         sfml1.draw(window);
         window.display(); 
         
