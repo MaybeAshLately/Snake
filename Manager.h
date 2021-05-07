@@ -29,13 +29,15 @@ class Manager
   void movement();
   void snake_is_dead();
   
-  
+  bool snake_hit(std::vector <sf::Vector2f>& snake_bufor,int row,int col);
 
   
   public:
   explicit Manager( Snake & snake_body,Board & snake_board);
   
   void play();
+
+  int get_score() const;
 };
 
 

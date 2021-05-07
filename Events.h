@@ -17,11 +17,13 @@ class Events
   Manager & manager_control;
   SnakeSFML & sfml_control;
   
-  
+  void died_control(sf::Event event);
   
   public:
   explicit Events(Snake & snake_control,Board & board_control,Manager & manager_control,SnakeSFML & sfml_control);
   void key_was_pressed(sf::Event event);
+
+  void mouse_button_pressed(sf::Event event);
   
   
 

@@ -52,6 +52,7 @@ class Snake
   void move_corner_right();
 
   bool is_cell_head(int row,int col);
+  std::vector <sf::Vector2f> return_body();
  
 
 };

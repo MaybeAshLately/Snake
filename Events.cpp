@@ -12,7 +12,7 @@ Events::Events(Snake & snake_control,Board & board_control,Manager & manager_con
 
 }
 
-
+//skręcanie strzałkami
 void Events::key_was_pressed(sf::Event event)
 {
   
@@ -26,4 +26,25 @@ void Events::key_was_pressed(sf::Event event)
        snake_control.move_corner_right();
   }
   
+}
+
+
+//klikanie 
+void Events::mouse_button_pressed(sf::Event event)
+{
+  if(sfml_control.get_app_state()==ALIVE) return;
+  else if(sfml_control.get_app_state()==DIED) died_control(event);
+}
+
+
+void Events::died_control(sf::Event event)
+{
+  if(event.mouseButton.button==1) return; //prawy
+
+  int x=event.mouseButton.x;
+  int y=event.mouseButton.y;
+
+  if((x>380)and(x<630)and(y>290)and(y<340))
+    sfml_control.zobacz_wyniki_pressed();
+    
 }

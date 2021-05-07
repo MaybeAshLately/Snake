@@ -222,3 +222,11 @@ bool Snake::is_cell_head(int row,int col)
   if(find==get_position_of_cell(0)) return true;
   return false;
 }
+
+
+
+//Zwraca ciało węża
+std::vector <sf::Vector2f> Snake::return_body()
+{
+  return snake_cells;
+}

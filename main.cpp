@@ -50,6 +50,10 @@ Test test_snake(snake1,board1,manager1);
               {
                 events1.key_was_pressed(event);
               }
+            else if(event.type == sf::Event::MouseButtonPressed)
+               {
+                 events1.mouse_button_pressed(event);
+               }
               
         }
         
