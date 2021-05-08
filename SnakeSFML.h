@@ -27,7 +27,7 @@ class SnakeSFML
   sf::RectangleShape wall_icon3;
   sf::RectangleShape wall_icon4;
 
-
+  int counter=0;
 
 
   sf::CircleShape food_icon;
@@ -52,12 +52,12 @@ class SnakeSFML
   sf::RectangleShape back;
 
 
-  std::vector <std::string> results;
+  
+  
   std::vector <std::string> best_results;
  
 
-  void load_results();
-  int counter=0;
+ void upload_from_file();
 
 public:
 explicit SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml);

@@ -5,6 +5,8 @@
 #include <cstring>
 #include <errno.h>
 #include <string>
+#include <sstream>
+
 
 
 SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml): snake_sfml(snake_sfml), board_sfml(board_sfml), manager_sfml(manager_sfml)
@@ -172,44 +174,57 @@ void SnakeSFML::draw_died(sf::RenderWindow & win)
 //funkcja rysująca aplikacje w trybie results
 void SnakeSFML::draw_results(sf::RenderWindow & win)
 {
-  if(counter==0) load_results();
-  counter++;
-
-  for(size_t i=0;i<results.size();i++)
-  {
-    txt1.setCharacterSize(10);
-    txt1.setPosition(10,10*i);
-    txt1.setString(results[i]);
-    win.draw(txt1);
-  }
- 
+   if(counter==0)
+   {
+     upload_from_file();
+     counter++;
+   } 
+   back.setSize(sf::Vector2f(400,300));
+   back.setPosition(200,100);
+   win.draw(back);
+   
+   txt1.setCharacterSize(15);
+   txt1.setPosition(280,105);
+   txt1.setString("NAZWA/POZIOM/WYNIK");
+   win.draw(txt1);
+   
+   
+  int size=best_results.size();
+   for(int i=0;i<size;++i)
+   {
+     txt1.setCharacterSize(15);
+     txt1.setString(best_results[i]);
+     txt1.setPosition(300,150+20*i);
+     if((manager_sfml.is_on_table()==true)and(manager_sfml.get_number_of_position()==i))txt1.setFillColor(sf::Color::Red);
+     win.draw(txt1);
+     txt1.setFillColor(sf::Color::Black);
+     
+   }
    
 }
 
-//wczytuje z pliku
-void SnakeSFML::load_results()
+
+void SnakeSFML::upload_from_file()
 {
-   std::ifstream plik("/home/runner/Snake/plik.txt");
-   if(!plik)
-   {
+  std::ifstream plik3("/home/runner/Snake/plik.txt");
+  if(!plik3)
+  {
     std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
     exit(-1);
-   }
-    
-    int i=0;
-    while(plik)
+  }
+   
+   int idx=0;
+    while(plik3)
     {
-      results.push_back("");      
-      getline(plik, results[i]);
-    i++;
+      best_results.push_back("");      
+      getline(plik3, best_results[idx]);
+    idx++;
     }
-   
-   plik.close();
-   
 
-     
+   plik3.close();
 
 }
+
 
 
 

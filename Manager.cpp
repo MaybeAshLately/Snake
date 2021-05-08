@@ -6,6 +6,7 @@
 #include <cstring>
 #include <errno.h>
 #include <string>
+#include <sstream>
 
 Manager::Manager(Snake & snake_body, Board & snake_board):snake_body(snake_body), snake_board(snake_board) 
 {
@@ -80,7 +81,7 @@ void Manager::snake_is_dead()
 {
   
 
-  std::fstream plik("/home/runner/Snake/plik.txt",std::ios_base::app);
+  std::ifstream plik("/home/runner/Snake/plik.txt");
 
 
   if(!plik)
@@ -88,30 +89,211 @@ void Manager::snake_is_dead()
     std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
     exit(-1);
   }
+  
 
-
-  plik<<score<<" "<<snake_body.get_snake_name()<<" ";
-
+  int idx=0;
+    while(plik)
+    {
+      results.push_back("");      
+      getline(plik, results[idx]);
+    idx++;
+    }
+  //
+   if(results.size()>10) number_of_position=vec_full(); 
+   else number_of_position=vec_not_full();
 
   
+     plik.close();
+    if(number_of_position==-1) 
+    {
+      one_of_winner_game=0;
+      return;
+    }
+    
+  
+  
+  if(results.size()>10) 
+  {
+    vec_ten(number_of_position);
+  }
+  else
+  {
+    vec_less(number_of_position);
+  }
+
+ 
+}
+
+
+void Manager::vec_ten(int number_of_position)
+{
   Level level=snake_board.get_game_level();
   std::string level_name;
-
   if(level==EASY) level_name="EASY";
   else if(level==MEDIUM) level_name="MEDIUM";
  else level_name="HARD";
 
-  plik<<level_name<<std::endl;
-  plik.close();
+   std::ofstream plik1("/home/runner/Snake/plik.txt",std::ios_base::trunc);
+  if(!plik1)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+  
+  if(number_of_position==0) 
+  {
+    plik1<<snake_body.get_snake_name()<<" "<<level_name<<" "<<score<<std::endl;
+    for(int i=0; i<9;++i)
+    {
+      plik1<<results[i]<<std::endl;
+    }
+    return;
+  }
+  
+  for(int i=0;i<number_of_position;++i)
+  {
+    plik1<<results[i]<<std::endl;
+  }
+  plik1<<snake_body.get_snake_name()<<" "<<level_name<<" "<<score<<std::endl;
+  if(number_of_position==9) return;
+
+  for(int i=number_of_position;i<=8;i++)
+  {
+    plik1<<results[i]<<std::endl;
+  }
+  
+
+  plik1.close();
 
 }
 
 
+void Manager::vec_less(int number_of_position)
+{
+   Level level=snake_board.get_game_level();
+   std::string level_name;
+   if(level==EASY) level_name="EASY";
+   else if(level==MEDIUM) level_name="MEDIUM";
+   else level_name="HARD";
+
+   std::ofstream plik2("/home/runner/Snake/plik.txt",std::ios_base::trunc);
+  if(!plik2)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+
+  if(number_of_position==0) 
+  {
+    plik2<<snake_body.get_snake_name()<<" "<<level_name<<" "<<score<<std::endl;
+    for(size_t i=0; i<results.size();++i)
+    {
+      plik2<<results[i]<<std::endl;
+    }
+    return;
+  }
+
+  for(int i=0;i<number_of_position;++i)
+  {
+    plik2<<results[i]<<std::endl;
+  }
+  plik2<<snake_body.get_snake_name()<<" "<<level_name<<" "<<score<<std::endl;
+  
+
+  for(size_t i=number_of_position;i<results.size()-1;i++)
+  {
+    plik2<<results[i]<<std::endl;
+  }
+  
+
+  plik2.close();
+}
+
+int Manager::vec_full()
+{
+   std::vector <int> help_vec;
+    for(size_t i=0;i<results.size();i++)
+    {
+    int dlugosc=results[i].length();
+      int liczba=0;
+      int mnoznik=1;
+      for(int j=dlugosc-1;j>=0;j--)
+      {
+        if(isdigit(results[i][j])==1) 
+        {
+          std::stringstream ss;
+          int help;
+          ss<<results[i][j];
+          ss>>help;
+          liczba=liczba+help*mnoznik;
+          mnoznik=mnoznik*10;
+        }
+        
+       
+      } 
+       help_vec.push_back(liczba);
+    }  
+    
+     if(score<help_vec[9]) return -1;
 
 
+    for(int i=0;i<=9;++i)
+    {
+       if(score>help_vec[i]) return i;
+    }
+    return -1;
+}
+
+
+int Manager::vec_not_full()
+{
+ 
+   std::vector <int> help_vec;
+    for(size_t i=0;i<results.size();i++)
+    {
+    int dlugosc=results[i].length();
+      int liczba=0;
+      int mnoznik=1;
+      for(int j=dlugosc-1;j>=0;j--)
+      {
+        if(isdigit(results[i][j])==1) 
+        {
+          std::stringstream ss;
+          int help;
+          ss<<results[i][j];
+          ss>>help;
+          liczba=liczba+help*mnoznik;
+          mnoznik=mnoznik*10;
+        }
+       
+       
+      } 
+       help_vec.push_back(liczba);
+    }  
+    
+     
+
+    for(size_t i=0;i<help_vec.size();++i)
+    {
+       if(score>help_vec[i]) return i;
+    }
+    return help_vec.size()-1;
+}
 
 //zwraca ilość punktów
 int Manager::get_score() const
 {
   return score;
+}
+
+//zwraca prawdę jeśli wynik przeprowadzonej właśnie gry znajduje się wśród 10 najleoszych
+bool Manager::is_on_table()
+{
+  if(one_of_winner_game==true) return true;
+  return false;
+}
+
+int Manager::get_number_of_position()
+{
+  return number_of_position;
 }
