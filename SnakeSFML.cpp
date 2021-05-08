@@ -1,9 +1,15 @@
 #include "SnakeSFML.h"
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <cstring>
+#include <errno.h>
+#include <string>
+
 
 SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml): snake_sfml(snake_sfml), board_sfml(board_sfml), manager_sfml(manager_sfml)
 {
-  app_state=ALIVE;
+  app_state=INSTRUCTION;
   wall_icon.setSize(sf::Vector2f(10,10));
   wall_icon.setFillColor(sf::Color(160,160,160));
 
@@ -59,14 +65,57 @@ SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_
 
 //Funkcja przekazująca rysowanie planszy do funkcji w zależności od stanu aplikacji
 void SnakeSFML::draw(sf::RenderWindow & win)
-{
-  if(app_state==ALIVE) draw_alive(win);
+{ 
+  if(app_state==INSTRUCTION) draw_instruction(win);
+  else if(app_state==ALIVE) draw_alive(win);
   else if(app_state==DIED) draw_died(win);
   else draw_results(win);
   
   
 }
 
+
+//Funkcja rysująca aplikację w trybie instrukcji
+void SnakeSFML::draw_instruction(sf::RenderWindow & win)
+{
+  draw_board(win);
+
+  txt1.setString("WAZ ZNAJDUJE SIE W LEWYM GORNYM ROGU");
+   txt1.setCharacterSize(20);
+   txt1.setPosition(160,200);
+   txt1.setFillColor(sf::Color::Black);
+   back.setSize(sf::Vector2f(650,250));
+   back.setFillColor(sf::Color(204,204,0));
+   back.setPosition(120,200);
+   back.setOutlineColor(sf::Color::Black);
+   back.setOutlineThickness(1);
+   win.draw(back);
+   win.draw(txt1);
+   txt1.setString("JEST SKIEROWANY NA POLUDNIE");
+   txt1.setPosition(250,230);
+   win.draw(txt1);
+   txt1.setString("MOZESZ SKRECAC W LEWO I PRAWO STRZALKAMI");
+   txt1.setPosition(140,260);
+   win.draw(txt1);
+   txt1.setString("ZJADAJAC JEDZENIE ZBIERASZ PUNKTY");
+   txt1.setPosition(210,290);
+   win.draw(txt1);
+   txt1.setString("UMRZESZ JESLI UDERZYSZ W PRZESZKODE LUB SIEBIE");
+   txt1.setPosition(130,320);
+   win.draw(txt1);
+   txt1.setString("POWODZENIA");
+   txt1.setPosition(380,350);
+   win.draw(txt1);
+   back.setSize(sf::Vector2f(250,50));
+   back.setPosition(330,380);
+   win.draw(back);
+   txt1.setCharacterSize(30);
+   txt1.setString("ROZPOCZNIJ");
+   txt1.setPosition(340,385);
+   win.draw(txt1);
+   
+  
+}
 
 
 //Funkcja rysująca aplikację w trybie alive
@@ -92,27 +141,27 @@ void SnakeSFML::draw_died(sf::RenderWindow & win)
 
    txt1.setString("GAME OVER");
    txt1.setCharacterSize(50);
-   txt1.setPosition(310,200);
+   txt1.setPosition(210,200);
    txt1.setFillColor(sf::Color::Black);
    back.setSize(sf::Vector2f(400,150));
    back.setFillColor(sf::Color(204,204,0));
-   back.setPosition(300,200);
+   back.setPosition(200,200);
    back.setOutlineColor(sf::Color::Black);
    back.setOutlineThickness(1);
    win.draw(back);
    win.draw(txt1);
    txt1.setCharacterSize(25);
    txt1.setString("WYNIK: ");
-   txt1.setPosition(410,255);
+   txt1.setPosition(310,255);
    win.draw(txt1);
    txt1.setString(std::to_string(manager_sfml.get_score()));
-   txt1.setPosition(530,255);
+   txt1.setPosition(430,255);
    win.draw(txt1);
    back.setSize(sf::Vector2f(250,50));
-   back.setPosition(380,290);
+   back.setPosition(280,290);
    win.draw(back);
    txt1.setString("ZOBACZ WYNIKI");
-   txt1.setPosition(385,295);
+   txt1.setPosition(285,295);
    win.draw(txt1);
    
 
@@ -123,9 +172,44 @@ void SnakeSFML::draw_died(sf::RenderWindow & win)
 //funkcja rysująca aplikacje w trybie results
 void SnakeSFML::draw_results(sf::RenderWindow & win)
 {
+  if(counter==0) load_results();
+  counter++;
 
+  for(size_t i=0;i<results.size();i++)
+  {
+    txt1.setCharacterSize(10);
+    txt1.setPosition(10,10*i);
+    txt1.setString(results[i]);
+    win.draw(txt1);
+  }
+ 
+   
 }
 
+//wczytuje z pliku
+void SnakeSFML::load_results()
+{
+   std::ifstream plik("/home/runner/Snake/plik.txt");
+   if(!plik)
+   {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+   }
+    
+    int i=0;
+    while(plik)
+    {
+      results.push_back("");      
+      getline(plik, results[i]);
+    i++;
+    }
+   
+   plik.close();
+   
+
+     
+
+}
 
 
 
@@ -214,4 +298,10 @@ app SnakeSFML::get_app_state() const
 void SnakeSFML::zobacz_wyniki_pressed()
 {
   app_state=RESULT;
+}
+
+//zmienia stan aplikacji na alive
+void SnakeSFML::rozpocznij_pressed()
+{
+  app_state=ALIVE;
 }

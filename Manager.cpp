@@ -78,7 +78,7 @@ void Manager::play()
 
 void Manager::snake_is_dead()
 {
-  std::cout<<"PUNKTY: "<< score<<std::endl;
+  
 
   std::fstream plik("/home/runner/Snake/plik.txt",std::ios_base::app);
 

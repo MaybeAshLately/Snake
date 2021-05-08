@@ -18,6 +18,7 @@ class Events
   SnakeSFML & sfml_control;
   
   void died_control(sf::Event event);
+  void instruction_control(sf::Event event);
   
   public:
   explicit Events(Snake & snake_control,Board & board_control,Manager & manager_control,SnakeSFML & sfml_control);

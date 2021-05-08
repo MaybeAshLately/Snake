@@ -6,10 +6,12 @@
 #include "Snake.h"
 #include "Board.h"
 #include "Manager.h"
+#include <string>
+#include <vector>
 //Ta klasa odpowiada za wyświetlanie rozgrywki w trybie graficznym 
 
 
-enum app{ALIVE,DIED,RESULT};
+enum app{INSTRUCTION,ALIVE,DIED,RESULT};
 class SnakeSFML
 {
 
@@ -39,6 +41,7 @@ class SnakeSFML
   void draw_eyes(int row, int col,sf::RenderWindow & win);
   void draw_blood(sf::RenderWindow & win);
 
+  void draw_instruction(sf::RenderWindow & win);
   void draw_alive(sf::RenderWindow & win);
   void draw_died(sf::RenderWindow & win);
   void draw_board(sf::RenderWindow & win);
@@ -48,6 +51,14 @@ class SnakeSFML
   sf::Text txt1;
   sf::RectangleShape back;
 
+
+  std::vector <std::string> results;
+  std::vector <std::string> best_results;
+ 
+
+  void load_results();
+  int counter=0;
+
 public:
 explicit SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml);
 void draw(sf::RenderWindow & win);
@@ -55,6 +66,7 @@ void draw(sf::RenderWindow & win);
 
 app get_app_state() const;
 void zobacz_wyniki_pressed();
+void rozpocznij_pressed();
 
 };
 

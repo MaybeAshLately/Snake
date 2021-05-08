@@ -32,9 +32,11 @@ void Events::key_was_pressed(sf::Event event)
 //klikanie 
 void Events::mouse_button_pressed(sf::Event event)
 {
-  if(sfml_control.get_app_state()==ALIVE) return;
+  if(sfml_control.get_app_state()==INSTRUCTION) instruction_control(event);
+  else if(sfml_control.get_app_state()==ALIVE) return;
   else if(sfml_control.get_app_state()==DIED) died_control(event);
 }
+
 
 
 void Events::died_control(sf::Event event)
@@ -44,7 +46,19 @@ void Events::died_control(sf::Event event)
   int x=event.mouseButton.x;
   int y=event.mouseButton.y;
 
-  if((x>380)and(x<630)and(y>290)and(y<340))
+  if((x>280)and(x<530)and(y>290)and(y<340))
     sfml_control.zobacz_wyniki_pressed();
     
+}
+
+
+void Events::instruction_control(sf::Event event)
+{
+  if(event.mouseButton.button==1) return; //prawy
+
+  int x=event.mouseButton.x;
+  int y=event.mouseButton.y;
+
+  if((x>330)and(x<580)and(y>380)and(y<430))
+    sfml_control.rozpocznij_pressed();
 }
