@@ -8,8 +8,10 @@
 Snake::Snake(std::string name): snake_name(name)
 {
   snake_cells.push_back(sf::Vector2f(1,1));
+
   length=static_cast<int>(snake_cells.size());
   move_to=SOUTH;
+ 
   alive=true;
   move_corner=ANY;
 }

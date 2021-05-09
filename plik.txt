@@ -1,10 +1,10 @@
 nazwa HARD 31
+test EASY 26
+abcd MEDIUM 20
 nazwa HARD 11
 nazwa HARD 10
+test2 HARD 10
 nazwa HARD 9
+abc HARD 9
 nazwa HARD 5
-nazwa HARD 3
-nazwa HARD 3
-nazwa HARD 2
-nazwa HARD 1
-nazwa HARD 1
+maciej EASY 5

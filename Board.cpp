@@ -34,6 +34,7 @@ void Board::generate_food()
         col=rand()%79;
         row=rand()%59;
         if((row==1)and(col==1)) continue;
+        
        if((fields[row][col].has_wall==false)and(fields[row][col].has_food==false))
        {
          fields[row][col].has_food=true;
@@ -73,9 +74,9 @@ void Board::generate_walls()
   generate_outside_walls();
   int number_of_walls=0;
   int placed_walls=0;
-  if(game_level==EASY) number_of_walls=150;
-  else if(game_level==MEDIUM) number_of_walls=200;
-  else number_of_walls=250;
+  if(game_level==EASY) number_of_walls=250;
+  else if(game_level==MEDIUM) number_of_walls=300;
+  else number_of_walls=350;
   int row,col;
   
   while(placed_walls!=number_of_walls)
@@ -83,6 +84,7 @@ void Board::generate_walls()
         col=rand()%79;
         row=rand()%59;
        if((col<11)and(row<11)) continue;
+       
        if(fields[row][col].has_wall==false)
        {
          fields[row][col].has_wall=true;

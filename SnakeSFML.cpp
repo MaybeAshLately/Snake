@@ -56,7 +56,7 @@ SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_
      fontLoaded=font1.loadFromFile(file);
      if(fontLoaded) break;
      std::cerr<<"CZCIONKA SIĘ NIE ŁADUJE!!!!"<<std::endl;
-     abort();
+     exit(-1);
    }
   
   txt1.setFont(font1);
