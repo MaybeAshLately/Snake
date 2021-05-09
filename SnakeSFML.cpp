@@ -8,7 +8,7 @@
 #include <sstream>
 
 
-
+//Konstruktor
 SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml): snake_sfml(snake_sfml), board_sfml(board_sfml), manager_sfml(manager_sfml)
 {
   app_state=INSTRUCTION;
@@ -23,7 +23,6 @@ SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_
   wall_icon3.setFillColor(sf::Color::Black);
   wall_icon4.setSize(sf::Vector2f(1,10));
   wall_icon4.setFillColor(sf::Color::Black);
-
 
   food_icon.setRadius(4);
   food_icon.setFillColor(sf::Color(255,255,0));
@@ -43,7 +42,7 @@ SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_
   blood_icon.setOutlineThickness(2);
   blood_icon.setOutlineColor(sf::Color(255,0,0));
 
-
+//Zgodnie z instrukcją z moodle dokumentuję że poniższy fragment zapożyczyłem (z lekkimi zmianami) z https://zts.ita.pwr.wroc.pl/gitlab/bartlomiej.golenko/kreski/-/blob/master/SFML/WidokPlanszy.cpp
   std::vector < std::string > fontSearchPath {
     
         "../resources/Roman SD.ttf",
@@ -58,12 +57,12 @@ SnakeSFML::SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_
      std::cerr<<"CZCIONKA SIĘ NIE ŁADUJE!!!!"<<std::endl;
      exit(-1);
    }
-  
   txt1.setFont(font1);
-
-  
+   //koniec zapożyczonego fragmentu   
 }
 
+//----------------------------
+//1. Funkcje rysujące
 
 //Funkcja przekazująca rysowanie planszy do funkcji w zależności od stanu aplikacji
 void SnakeSFML::draw(sf::RenderWindow & win)
@@ -72,10 +71,7 @@ void SnakeSFML::draw(sf::RenderWindow & win)
   else if(app_state==ALIVE) draw_alive(win);
   else if(app_state==DIED) draw_died(win);
   else draw_results(win);
-  
-  
 }
-
 
 //Funkcja rysująca aplikację w trybie instrukcji
 void SnakeSFML::draw_instruction(sf::RenderWindow & win)
@@ -115,8 +111,6 @@ void SnakeSFML::draw_instruction(sf::RenderWindow & win)
    txt1.setString("ROZPOCZNIJ");
    txt1.setPosition(340,385);
    win.draw(txt1);
-   
-  
 }
 
 
@@ -124,15 +118,12 @@ void SnakeSFML::draw_instruction(sf::RenderWindow & win)
 void SnakeSFML::draw_alive(sf::RenderWindow & win)
 {
   draw_board(win);
-
   if(snake_sfml.is_alive()==false)
   {
     draw_blood(win);
     app_state=DIED;
   }
- 
   manager_sfml.play();
-
 }
 
 //funkcja rysująca aplikacje w trybie died
@@ -164,10 +155,7 @@ void SnakeSFML::draw_died(sf::RenderWindow & win)
    win.draw(back);
    txt1.setString("ZOBACZ WYNIKI");
    txt1.setPosition(285,295);
-   win.draw(txt1);
-   
-
-   
+   win.draw(txt1); 
 }
 
 
@@ -188,7 +176,6 @@ void SnakeSFML::draw_results(sf::RenderWindow & win)
    txt1.setString("NAZWA/POZIOM/WYNIK");
    win.draw(txt1);
    
-   
   int size=best_results.size();
    for(int i=0;i<size;++i)
    {
@@ -197,13 +184,11 @@ void SnakeSFML::draw_results(sf::RenderWindow & win)
      txt1.setPosition(300,150+20*i);
      if((manager_sfml.is_on_table()==true)and(manager_sfml.get_number_of_position()==i))txt1.setFillColor(sf::Color::Red);
      win.draw(txt1);
-     txt1.setFillColor(sf::Color::Black);
-     
-   }
-   
+     txt1.setFillColor(sf::Color::Black);  
+   }  
 }
 
-
+//funkcja pomocnicza wczytująca dane z pliku
 void SnakeSFML::upload_from_file()
 {
   std::ifstream plik3("/home/runner/Snake/plik.txt");
@@ -212,20 +197,15 @@ void SnakeSFML::upload_from_file()
     std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
     exit(-1);
   }
-   
-   int idx=0;
+    int idx=0;
     while(plik3)
     {
       best_results.push_back("");      
       getline(plik3, best_results[idx]);
     idx++;
     }
-
    plik3.close();
-
 }
-
-
 
 
 //funkcja rysująca planszę
@@ -247,11 +227,9 @@ void SnakeSFML::draw_board(sf::RenderWindow & win)
         win.draw(wall_icon3);
         wall_icon4.setPosition(col*10+7,row*10);
         win.draw(wall_icon4);
-
       }
       else if(board_sfml.field_has_food(row,col)==true)
-      {
-        
+      { 
         food_icon.setPosition(col*10+2,row*10+2);
         win.draw(food_icon);
       }
@@ -264,8 +242,7 @@ void SnakeSFML::draw_board(sf::RenderWindow & win)
           snake_icon.setFillColor(sf::Color(150,110,0));
           win.draw(snake_icon);
           snake_icon.setFillColor(sf::Color(0,204,0));
-           draw_eyes(row,col, win);
-           
+           draw_eyes(row,col, win);   
         }
         else 
         {
@@ -280,8 +257,7 @@ void SnakeSFML::draw_board(sf::RenderWindow & win)
 }
 
 
-
-//funkcja rysująca krew
+//funkcja pomocnicza rysująca krew
 void SnakeSFML::draw_blood(sf::RenderWindow & win)
 {
   sf::Vector2f head(snake_sfml.get_position_of_cell(0));
@@ -293,21 +269,14 @@ void SnakeSFML::draw_blood(sf::RenderWindow & win)
 //funkcja pomocnicza rysująca oczy 
 void SnakeSFML::draw_eyes(int row, int col,sf::RenderWindow & win)
 {
-   
-    eye_icon.setPosition(col*10+2,row*10+3);
+   eye_icon.setPosition(col*10+2,row*10+3);
    win.draw(eye_icon);
-    eye_icon.setPosition(col*10+8,row*10+3);
-    win.draw(eye_icon);
-    
-  
+   eye_icon.setPosition(col*10+8,row*10+3);
+   win.draw(eye_icon);   
 }
 
-//zwraca stan aplikacj
-app SnakeSFML::get_app_state() const
-{
-  return app_state;
-}
-
+//----------------------------------------
+//2. Funkcje modyfikujace stan aplikacji
 
 //zmienia stan aplikacji na result
 void SnakeSFML::zobacz_wyniki_pressed()
@@ -320,3 +289,15 @@ void SnakeSFML::rozpocznij_pressed()
 {
   app_state=ALIVE;
 }
+
+//------------------------------
+//3.zwraca informację o stanie aplikacji
+
+//zwraca stan aplikacj
+app SnakeSFML::get_app_state() const
+{
+  return app_state;
+}
+
+
+

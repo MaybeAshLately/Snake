@@ -9,12 +9,10 @@
 
 /*
 Klasa zarządzająca grą. Do jej obowiązków należy;
--sprawdzanie czy wąż nie umarł 
--sprawdzanie czy zjadł jedzenie 
--liczenie ilości punktów (ilość zjedzonego jedzenia)
--zapisuje wynik do pliku (odczytuje wyniki z pliku)
-
-Korzysta z referencji na planszę 
+1. Przeprowadzanie rozgrywki 
+2. Modelowanie ruchu/śmierci/jedzenia
+3. Wczytywanie danych do pliku
+4. Zwracanie informacji (uzyskane punkty; czy rozegrana gra była jedną z 10 najlepszych i jeśli tak to jaki miała numer)
 */
 
 class Manager
@@ -24,11 +22,12 @@ class Manager
   
   Snake & snake_body;
   Board & snake_board;
+
   sf::Clock clk;
   int number_of_position;
+
   void movement();
   void snake_is_dead();
-  
   bool snake_hit(std::vector <sf::Vector2f>& snake_bufor,int row,int col);
 
   std::vector <std::string> results;
@@ -45,8 +44,8 @@ class Manager
 
   int get_score() const;
 
-  bool is_on_table();
-  int get_number_of_position();
+  bool is_on_table() const;
+  int get_number_of_position() const;
 };
 
 

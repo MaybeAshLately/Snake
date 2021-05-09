@@ -1,10 +1,10 @@
 nazwa HARD 31
 test EASY 26
+qwert yuiop MEDIUM 21
 abcd MEDIUM 20
+azdfsxkjgtfd EASY 16
 nazwa HARD 11
 nazwa HARD 10
 test2 HARD 10
 nazwa HARD 9
 abc HARD 9
-nazwa HARD 5
-maciej EASY 5

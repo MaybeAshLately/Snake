@@ -6,21 +6,25 @@
 #include "Board.h"
 #include <string>
 
-//Ta klasa odpowiada za ustalenie stanu początkowego gry;
-//1. wyświetla ekran powitalny
-//2. wyświetla ekran wyboru poziomu
-//3. wyświetla ekran wpisywania nazwy użytkownika
-//Zwraca wybrany poziom i nazwę 
+/*
+Ta klasa odpowiada za ustalenie stanu początkowego gry;
+ 1. wyświetla graficznie poszczególne tryby aplikacji (ekran powitalny,ekran wyboru poziomu,ekran wpisywania nazwy użytkownika)
+ 2. obsługuje zdarzenia (kliknięcia na przyciski, wpisywanie nazwy użytkownika) 
+ 3. zwraca nazwę użytkownika i wybrany poziom 
+*/
 
 enum State {INTRO,LEVEL_CHOICE, NAME_CHOICE };
 
 class Begin
 {
+  Level choosed_level;
+  std::string choosed_name;
+  
   State begin_state;
+
   sf::RectangleShape rect;
   sf::Font font1;
   sf::Text txt1;
-
 
   void draw_intro(sf::RenderWindow & win);
   void draw_level(sf::RenderWindow & win);
@@ -30,8 +34,6 @@ class Begin
   void mouse_level(sf::Event event);
   void mouse_name(sf::Event event);
 
-  Level choosed_level;
-  std::string choosed_name;
   bool end;
   bool error;
   
@@ -42,7 +44,7 @@ class Begin
   void mouse_was_pressed(sf::Event event);
   void text_was_entered(sf::Event event);
 
-  std::string get_name();
-  Level get_level();
+  std::string get_name() const;
+  Level get_level() const;
 };
 #endif

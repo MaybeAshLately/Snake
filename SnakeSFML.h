@@ -8,8 +8,10 @@
 #include "Manager.h"
 #include <string>
 #include <vector>
-//Ta klasa odpowiada za wyświetlanie rozgrywki w trybie graficznym 
-
+/*Ta klasa odpowiada za wyświetlanie rozgrywki w trybie graficznym
+1. Wyświetla graficzną rozgrywkę 
+2. Zwraca informację o stanie aplikacji
+*/
 
 enum app{INSTRUCTION,ALIVE,DIED,RESULT};
 class SnakeSFML
@@ -28,7 +30,6 @@ class SnakeSFML
   sf::RectangleShape wall_icon4;
 
   int counter=0;
-
 
   sf::CircleShape food_icon;
   sf::CircleShape snake_icon;
@@ -50,19 +51,15 @@ class SnakeSFML
   sf::Font font1;
   sf::Text txt1;
   sf::RectangleShape back;
-
-
   
-  
-  std::vector <std::string> best_results;
- 
+std::vector <std::string> best_results;
 
  void upload_from_file();
 
 public:
 explicit SnakeSFML(Snake & snake_sfml,  Board & board_sfml, Manager & manager_sfml);
-void draw(sf::RenderWindow & win);
 
+void draw(sf::RenderWindow & win);
 
 app get_app_state() const;
 void zobacz_wyniki_pressed();

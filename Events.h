@@ -7,7 +7,7 @@
 #include "Manager.h"
 #include "SnakeSFML.h"
 /*
-Ta klasa odpowiada za obsługę zdarzeń 
+Ta klasa odpowiada za obsługę zdarzeń w grze (skręcanie wężem, klikanie na przyciski) 
 */
 
 class Events
@@ -22,12 +22,9 @@ class Events
   
   public:
   explicit Events(Snake & snake_control,Board & board_control,Manager & manager_control,SnakeSFML & sfml_control);
+
   void key_was_pressed(sf::Event event);
-
   void mouse_button_pressed(sf::Event event);
-  
-  
-
 };
 
 #endif

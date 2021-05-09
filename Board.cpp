@@ -11,64 +11,16 @@ Board::Board(Snake & snake_body ,const Level g_level): snake_body(snake_body), g
      {
        fields[row][col].has_food=false;
        fields[row][col].has_wall=false;
-     }
-    
+     } 
   }
-
-
   generate_walls();
   generate_food();
-
 }
 
+//-------------------------
+//1. Funkcje generujące początkowy stan planszy 
 
-//generuje położenie jedzenia
-void Board::generate_food()
-{
-  int number_of_food=300;
-  int placed_food=0;
-  int row,col;
-  
-  while(placed_food!=number_of_food)
-  {
-        col=rand()%79;
-        row=rand()%59;
-        if((row==1)and(col==1)) continue;
-        
-       if((fields[row][col].has_wall==false)and(fields[row][col].has_food==false))
-       {
-         fields[row][col].has_food=true;
-         placed_food++;
-       }     
-  }
-
-
-}
-
-//pomocnicza funkcja generująca zewnętrzne ściany
-void Board::generate_outside_walls()
-{
-  for(int row=0;row<60;row++)
-  {
-    fields[row][0].has_wall=true;
-  }
-  for(int col=0;col<80;col++)
-  {
-    fields[0][col].has_wall=true;
-  }
-  
-  for(int row=0;row<60;row++)
-  {
-    fields[row][79].has_wall=true;
-  }
-  for(int col=0;col<80;col++)
-  {
-    fields[59][col].has_wall=true;
-  }
-
-}
-
-//generuje przeszkody (w lewym górnym rogu mała przestrzeń bez przeszkód aby nie wszedł umarł od razu po starcie)
+//generuje przeszkody (w lewym górnym rogu mała przestrzeń bez przeszkód aby wąż nie umarł od razu po starcie)
 void Board::generate_walls()
 {
   generate_outside_walls();
@@ -91,44 +43,86 @@ void Board::generate_walls()
          placed_walls++;
        }     
   }
-
 }
 
-//ZWRACA POZIOM TRUDNOŚCI GRY
-Level Board::get_game_level() const
+//pomocnicza funkcja generująca zewnętrzne ściany
+void Board::generate_outside_walls()
 {
-  return game_level;
+  for(int row=0;row<60;row++)
+  {
+    fields[row][0].has_wall=true;
+  }
+  for(int col=0;col<80;col++)
+  {
+    fields[0][col].has_wall=true;
+  }
+
+  for(int row=0;row<60;row++)
+  {
+    fields[row][79].has_wall=true;
+  }
+  for(int col=0;col<80;col++)
+  {
+    fields[59][col].has_wall=true;
+  }
 }
- 
 
-
-  //ZWRACA PRAWDĘ JEŚLI POLE MA PRZESZKODĘ
-  bool Board::field_has_wall(int row,int col)
+//generuje położenie jedzenia
+void Board::generate_food()
+{
+  int number_of_food=300;
+  int placed_food=0;
+  int row,col;  
+  while(placed_food!=number_of_food)
   {
-     if(fields[row][col].has_wall==true) return true;
-     return false;
+        col=rand()%79;
+        row=rand()%59;
+        if((row==1)and(col==1)) continue;
+        
+       if((fields[row][col].has_wall==false)and(fields[row][col].has_food==false))
+       {
+         fields[row][col].has_food=true;
+         placed_food++;
+       }     
   }
+}
 
+//-----------------------
+//2. symuluje jedzenie z punktu widzenia planszy
 
-  //ZWRACA PRAWDĘ JEŚLI POLE MA JEDZENIE
-  bool Board::field_has_food(int row,int col)
-  {
-    
-     if(fields[row][col].has_food==true) return true;
-     
-     return false;
-  }
-
-
-//USUWA JEDZENIE Z POLA
+//Usuwa jedzeni z pola
 void Board::eat(int row, int col)
 {
   
  fields[row][col].has_food=false;
 }
 
+//-----------------------------------------
+//3. Zwraca informację 
 
-//zwraca prawdę jeśli na polu jest część węża
+
+//Zwraca poziom trudności gry
+Level Board::get_game_level() const
+{
+  return game_level;
+}
+ 
+//Zwraca prawdę jeśli pole ma przeszkodę (ścianę)
+bool Board::field_has_wall(int row,int col) const
+ {
+     if(fields[row][col].has_wall==true) return true;
+     return false;
+ }
+
+//Zwraca prawdę jeśli na polu jest jedzenie 
+bool Board::field_has_food(int row,int col) const
+ {
+     if(fields[row][col].has_food==true) return true;
+     return false;
+ }
+
+
+//Zwraca prawdę jeśli na polu jest część węża
 bool Board::is_snake_on_field(int row, int col)
 {
   int size=snake_body.get_snake_length();

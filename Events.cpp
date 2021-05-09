@@ -7,29 +7,27 @@
 #include "SnakeSFML.h"
 #include <iostream>
 
+//Konstruktor
 Events::Events(Snake & snake_control,Board & board_control,Manager & manager_control,SnakeSFML & sfml_control): snake_control(snake_control), board_control(board_control), manager_control(manager_control), sfml_control(sfml_control)
 {
 
 }
 
-//skręcanie strzałkami
+//skręcanie wężem strzałkami
 void Events::key_was_pressed(sf::Event event)
 {
-  
   if(event.key.code==sf::Keyboard::Left)
   {
-    snake_control.move_corner_left();
-    
+    snake_control.move_corner_left();    
   }
   else if(event.key.code==sf::Keyboard::Right)
   {
        snake_control.move_corner_right();
-  }
-  
+  } 
 }
 
 
-//klikanie 
+//Wywołuje odpowiednią funkcję do obsługi zdarzeń w zależności od trybu aplikacji 
 void Events::mouse_button_pressed(sf::Event event)
 {
   if(sfml_control.get_app_state()==INSTRUCTION) instruction_control(event);
@@ -38,7 +36,7 @@ void Events::mouse_button_pressed(sf::Event event)
 }
 
 
-
+//obsługa kliknięć w trybie DIED
 void Events::died_control(sf::Event event)
 {
   if(event.mouseButton.button==1) return; //prawy
@@ -47,11 +45,10 @@ void Events::died_control(sf::Event event)
   int y=event.mouseButton.y;
 
   if((x>280)and(x<530)and(y>290)and(y<340))
-    sfml_control.zobacz_wyniki_pressed();
-    
+    sfml_control.zobacz_wyniki_pressed();    
 }
 
-
+//obsługa kliknięć w trybie INSTRUCTION
 void Events::instruction_control(sf::Event event)
 {
   if(event.mouseButton.button==1) return; //prawy

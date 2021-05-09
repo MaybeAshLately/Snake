@@ -4,13 +4,12 @@
 #include <iostream>
 #include <cstring>
 
-
-
 //konstruktor
 Begin::Begin()
 {
   begin_state=INTRO;
 
+  //Zgodnie z instrukcją z moodle dokumentuję że poniższy fragment zapożyczyłem (z lekkimi zmianami) z https://zts.ita.pwr.wroc.pl/gitlab/bartlomiej.golenko/kreski/-/blob/master/SFML/WidokPlanszy.cpp 
   std::vector < std::string > fontSearchPath {
     
         "../resources/Roman SD.ttf",
@@ -26,12 +25,15 @@ Begin::Begin()
      exit(-1);
    }
    txt1.setFont(font1);
-   choosed_name="";
-   end=false;
+   //koniec zapożyczonego fragmentu 
+
+  choosed_name="";
+  end=false;
   error=false;
 }
 
-
+//---------------------------------------
+//1. FUNKCJE RYSUJĄCE
 
 //Funkcja przekazująca sterowanie rysowaniem w zależności od obecnego trybu aplikacji 
 void Begin::draw(sf::RenderWindow & win)
@@ -63,6 +65,11 @@ void Begin::draw_intro(sf::RenderWindow & win)
 //funkcja rysująca w trybie wyświetlania wyboru poziomu
 void Begin::draw_level(sf::RenderWindow & win)
 {
+  
+  txt1.setCharacterSize(60);
+  txt1.setString("WYBIERZ POZIOM");
+  txt1.setPosition(100,50);
+  win.draw(txt1);
   txt1.setCharacterSize(40);
   rect.setPosition(50,200);
   win.draw(rect);
@@ -98,7 +105,6 @@ void Begin::draw_name(sf::RenderWindow & win)
    txt1.setCharacterSize(20);
    txt1.setPosition(205,160);
    win.draw(txt1);
-
    rect.setSize(sf::Vector2f(200,50));
    rect.setPosition(300,210);
    win.draw(rect);
@@ -113,9 +119,8 @@ void Begin::draw_name(sf::RenderWindow & win)
    
 }
 
-
-
-
+//------------------------------------------------
+//2. FUNKCJE OBSŁUGUJĄCE ZDARZENIA 
 
 //Funkcja przekazująca sterowanie obsługi zdarzeń kliknięcia w zależności od trybu aplikacji
 void Begin::mouse_was_pressed(sf::Event event)
@@ -129,7 +134,6 @@ void Begin::mouse_was_pressed(sf::Event event)
 //obsługa kliknięcia w trybie intro
 void Begin::mouse_intro(sf::Event event)
 {
-  
   if(event.mouseButton.button==1) return; 
 
   int x=event.mouseButton.x;
@@ -187,20 +191,21 @@ void Begin::mouse_name(sf::Event event)
 //obsługa wpisywania nazwy
 void Begin::text_was_entered(sf::Event event)
 {
-  
-  char help=event.text.unicode;
+ char help=event.text.unicode;
  choosed_name=choosed_name+help;
 }
 
+//------------------------------------------------
+//3. FUNKCJE ZWRACAJĄCE INFORMACJE
 
 //zwraca wybraną nazwę 
-std::string Begin::get_name()
+std::string Begin::get_name() const
 {
   return choosed_name;
 }
 
 //zwraca wybrany poziom 
-Level Begin::get_level()
+Level Begin::get_level() const
 {
   return choosed_level;
 }
